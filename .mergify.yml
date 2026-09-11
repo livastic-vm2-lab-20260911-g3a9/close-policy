@@ -1,0 +1,7 @@
+pull_request_rules:
+  - name: vm2 org trusted source
+    conditions:
+      - base = main
+    actions:
+      comment:
+        message: VM2-ORG-TRUSTED-SOURCE-BASELINE
