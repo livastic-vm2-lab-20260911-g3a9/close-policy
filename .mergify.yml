@@ -1,13 +1,12 @@
+merge_queue:
+  mode: serial
+  max_parallel_checks: 1
 queue_rules:
-  - name: vm2-head-rename-freshness
+  - name: vm2-rebase-lastpush-freshness
     batch_size: 1
     max_checks_retries: 0
+    update_method: rebase
     queue_conditions:
-      - base = vm2-headrename-base-0915
-      - title = VM2_HEAD_BRANCH_RENAME
-      - head = vm2-headrename-old-0915
-    merge_conditions:
-      - base = vm2-headrename-base-0915
-      - title = VM2_HEAD_BRANCH_RENAME
-      - check-success = vm2-headrename-hold
+      - base = vm2-rebase-lastpush-base-0915
+      - title = VM2_REBASE_LASTPUSH_FRESHNESS
 pull_request_rules: []
