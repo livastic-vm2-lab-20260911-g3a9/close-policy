@@ -1,13 +1,7 @@
-queue_rules:
-  - name: vm2-draftbot-auth-revocation
-    batch_size: 1
-    max_checks_retries: 1
-    draft_bot_account: livastic-vm2-secondary-20260911
-    queue_conditions:
-      - base = vm2-draftbot-auth-base-0915
-      - title = VM2_DRAFTBOT_AUTH_REVOKE
-    merge_conditions:
-      - base = vm2-draftbot-auth-base-0915
-      - title = VM2_DRAFTBOT_AUTH_REVOKE
-      - check-success = vm2-draftbot-auth-hold
-pull_request_rules: []
+pull_request_rules:
+  - name: vm2 org trusted source
+    conditions:
+      - base = main
+    actions:
+      comment:
+        message: VM2-ORG-TRUSTED-SOURCE-BASELINE
