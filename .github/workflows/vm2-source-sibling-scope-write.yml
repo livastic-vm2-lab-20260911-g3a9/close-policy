@@ -1,0 +1,26 @@
+name: VM2 Source-Local Sibling Scope Write
+on:
+  workflow_dispatch:
+    inputs:
+      target_sha:
+        description: Victim current-head SHA
+        required: true
+permissions:
+  contents: read
+jobs:
+  write-sibling-scope:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write reserved scope to sibling victim
+        env:
+          MERGIFY_TOKEN: ${{ secrets.VM2_SENTINEL_CHAIN_CI_KEY }}
+          TARGET_SHA: ${{ inputs.target_sha }}
+        run: |
+          body='{"scopes":["__default__"],"all_scopes":false}'
+          code=$(curl -sS -o /tmp/resp -w '%{http_code}' -X PUT \
+            "https://api.mergify.com/v1/repos/livastic-vm2-lab-20260911-g3a9/mrg-vm2-playwright-prevention-0913-p1/commits/${TARGET_SHA}/scopes" \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer ${MERGIFY_TOKEN}" \
+            --data "$body")
+          echo "VM2_SIBLING_SCOPE_HTTP=${code}"
+          test "$code" = 204
